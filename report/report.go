@@ -47,20 +47,47 @@ func CalculateTotalLineOfCode(fileScanResultsArr []scanner.FileScanResults) scan
 	return totalResults
 }
 
+func CalculateTotalLineOfCodeSupportedOnly(fileScanResultsArr []scanner.FileScanResults) scanner.FileScanResults {
+	totalResults := scanner.FileScanResults{}
+
+	totalResults.FilePath = "total"
+	for _, results := range fileScanResultsArr {
+		isSupportedLanguage := false
+		langInfo, foundLangInfo := scanner.LookupLanguageInfo(results.LanguageName)
+		if foundLangInfo {
+			isSupportedLanguage = langInfo.IsSupported
+		} else {
+			logger.Debug("Language ", results.LanguageName, " is not found in the language info database, assuming it is not supported.")
+		}
+		if isSupportedLanguage {
+			totalResults.BlankLineCount += results.BlankLineCount
+			totalResults.CommentsLineCount += results.CommentsLineCount
+			totalResults.CodeLineCount += results.CodeLineCount
+			totalResults.TotalLines += results.TotalLines
+		}
+	}
+	return totalResults
+}
+
 // OutputCSV writes the results of the scan to a CSV file
 // Returns the total number of lines of code for all files scanned
 func ConvertFileResultsIntoRecords(fileScanResultsArr []scanner.FileScanResults, totalResults scanner.FileScanResults) [][]string {
 	// Create CSV information
 	records := [][]string{
-		{"filePath", "languageName", "blank", "comment", "code"},
+		{"filePath", "languageName", "isSupportedLanguage", "blank", "comment", "code"},
 	}
 
 	for _, results := range fileScanResultsArr {
-		row := []string{results.FilePath, results.LanguageName, strconv.Itoa(results.BlankLineCount), strconv.Itoa(results.CommentsLineCount), strconv.Itoa(results.CodeLineCount)}
+		isSupportedLanguage := false
+		langInfo, foundLangInfo := scanner.LookupLanguageInfo(results.LanguageName)
+		if foundLangInfo {
+			isSupportedLanguage = langInfo.IsSupported
+		}
+		row := []string{results.FilePath, results.LanguageName, strconv.FormatBool(isSupportedLanguage), strconv.Itoa(results.BlankLineCount), strconv.Itoa(results.CommentsLineCount), strconv.Itoa(results.CodeLineCount)}
 		records = append(records, row)
 	}
 	// Append Total Row
-	totalRow := []string{"total", "", strconv.Itoa(totalResults.BlankLineCount), strconv.Itoa(totalResults.CommentsLineCount), strconv.Itoa(totalResults.CodeLineCount)}
+	totalRow := []string{"total", "", "", strconv.Itoa(totalResults.BlankLineCount), strconv.Itoa(totalResults.CommentsLineCount), strconv.Itoa(totalResults.CodeLineCount)}
 	records = append(records, totalRow)
 	return records
 }

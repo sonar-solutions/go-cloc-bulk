@@ -26,12 +26,12 @@ func main() {
 	// sort and calculate total LOC
 	fileScanResultsArr = report.SortFileScanResults(fileScanResultsArr)
 	repoTotalResult := report.CalculateTotalLineOfCode(fileScanResultsArr)
-
-	// convert results into records for CSV or command line output
-	records := report.ConvertFileResultsIntoRecords(fileScanResultsArr, repoTotalResult)
+	repoTotalResultSupportedOnly := report.CalculateTotalLineOfCodeSupportedOnly(fileScanResultsArr)
 
 	// Dump results by file in a csv
 	if args.CsvFilePath != "" {
+		// convert results into records for CSV or command line output
+		records := report.ConvertFileResultsIntoRecords(fileScanResultsArr, repoTotalResult)
 		logger.Debug("Dumping results by file to ", args.CsvFilePath)
 		report.WriteCsv(args.CsvFilePath, records)
 		logger.Info("Done! Results can be found ", args.CsvFilePath)
@@ -49,16 +49,18 @@ func main() {
 		report.DumpSVGs(args.HtmlReportsDirectoryPath)
 		logger.Info("Done! HTML report for ", args.LocalScanFilePath, " can be found in ", args.HtmlReportsDirectoryPath)
 	}
-
+	logger.Info("Printing total LOC for ALL languages ...")
 	report.PrintResultsToCommandLine(repoTotalResult.CodeLineCount, repoTotalResult.CommentsLineCount, repoTotalResult.BlankLineCount)
+	logger.Info("Printing LOC for SUPPORTED languages ...")
+	report.PrintResultsToCommandLine(repoTotalResultSupportedOnly.CodeLineCount, repoTotalResultSupportedOnly.CommentsLineCount, repoTotalResultSupportedOnly.BlankLineCount)
 	logger.Info("")
 	logger.Info("VERIFY THIS DOESN'T INCLUDE 3RD PARTY DEPENDENCIES, TEST CODE, AND OTHER NON-SOURCE CODE FILES FROM THIS ANALYSIS.")
 	logger.Info("")
 	logger.Info("https://docs.sonarsource.com/sonarqube-server/latest/server-upgrade-and-maintenance/monitoring/lines-of-code/ - LOC definitions.")
 	logger.Info("")
 	logger.Info("For detailed reporting, please use the --csv or --html options. ")
-	logger.Info("Total LOC for ", args.LocalScanFilePath, " is ", repoTotalResult.CodeLineCount)
+	logger.Info("Total LOC for ", args.LocalScanFilePath, " for supported languages is ", repoTotalResultSupportedOnly.CodeLineCount)
 
 	// Print the total LOC to standard output to make it easy for external tools to parse
-	fmt.Println(repoTotalResult.CodeLineCount)
+	fmt.Println(repoTotalResultSupportedOnly.CodeLineCount)
 }

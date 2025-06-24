@@ -110,13 +110,18 @@ func createHTMLPage(component *FileTreeComponent) string {
 
 	// add language statistics
 	htmlContent += "<div class='table-container'><h2>By Language</h2>"
-	htmlContent += "<table id='language-statistics'><thead><tr><th>Language</th><th>Code Line Count</th></tr><tr><thead></thead></tr></thead><tbody>"
+	htmlContent += "<table id='language-statistics'><thead><tr><th>Language</th><th>Supported Language</th><th>Code Line Count</th></tr><tr><thead></thead></tr></thead><tbody>"
 	// iterate a map
 	for _, pair := range sortKeysByValueInMap(component.LanguageToCodeLineCount) {
-		htmlContent += "<tr><td>" + pair.Key + "</td><td class='code-line-count'>" + strconv.Itoa(pair.Value) + "</td></tr>"
+		langInfo, foundLangInfo := scanner.LookupLanguageInfo(pair.Key)
+		isSupportedLanguage := false
+		if foundLangInfo {
+			isSupportedLanguage = langInfo.IsSupported
+		}
+		htmlContent += "<tr><td>" + pair.Key + "<td>" + strconv.FormatBool(isSupportedLanguage) + "</td>" + "</td><td class='code-line-count'>" + strconv.Itoa(pair.Value) + "</td></tr>"
 	}
 	htmlContent += "</tbody>"
-	htmlContent += "<tfoot><tr><th></th><th class='code-line-count'>" + strconv.Itoa(component.CodeLineCount) + "</th></tfoot>"
+	htmlContent += "<tfoot><tr><th></th><th></th><th class='code-line-count'>" + strconv.Itoa(component.CodeLineCount) + "</th></tfoot>"
 	htmlContent += "</table></div>"
 	return htmlContent
 }
