@@ -1,81 +1,251 @@
 {
+  "ASP": {
+    "LineComments": ["//", "'"],
+    "MultiLineComments": [["/*", "*/"]],
+    "Extensions": [".asa", ".ashx", ".asp", ".axd"],
+    "FileNames": [],
+    "IsSupported": false
+  },
+  "ASP.NET": {
+    "LineComments": ["//", "'"],
+    "MultiLineComments": [["/*", "*/"]],
+    "Extensions": [
+      ".asax",
+      ".ascx",
+      ".asmx",
+      ".aspx",
+      ".master",
+      ".sitemap",
+      ".webinfo"
+    ],
+    "FileNames": [],
+    "IsSupported": true
+  },
   "Abap": {
     "LineComments": ["\""],
     "MultiLineComments": [["/*", "*/"]],
     "Extensions": [".abap", ".ab4", ".flow"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
   },
   "ActionScript": {
     "LineComments": ["//"],
     "MultiLineComments": [["/*", "*/"]],
-    "Extensions": [".as"],
-    "FileNames": []
+    "Extensions": [".as", ".actionscript"],
+    "FileNames": [],
+    "IsSupported": false
+  },
+  "Ada": {
+    "LineComments": ["--"],
+    "MultiLineComments": [["/*", "*/"]],
+    "Extensions": [".ada", ".adb", ".ads", ".pad"],
+    "FileNames": [],
+    "IsSupported": false
   },
   "Apex": {
     "LineComments": ["//"],
     "MultiLineComments": [["/*", "*/"]],
     "Extensions": [".cls", ".trigger"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
+  },
+  "AppleScript": {
+    "LineComments": ["--"],
+    "MultiLineComments": [["(*", "*)"]],
+    "Extensions": [".applescript"],
+    "FileNames": [],
+    "IsSupported": false
+  },
+  "Assembly": {
+    "LineComments": [";"],
+    "MultiLineComments": [],
+    "Extensions": [".asm", ".s", ".S", ".a51", ".nasm"],
+    "FileNames": [],
+    "IsSupported": false
+  },
+  "Bazel": {
+    "LineComments": ["#"],
+    "MultiLineComments": [],
+    "Extensions": [".bazel", ".bzl"],
+    "FileNames": [],
+    "IsSupported": false
   },
   "C": {
     "LineComments": ["//"],
     "MultiLineComments": [["/*", "*/"]],
     "Extensions": [".c"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
   },
   "C Header": {
     "LineComments": ["//"],
     "MultiLineComments": [["/*", "*/"]],
     "Extensions": [".h"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
   },
   "C#": {
     "LineComments": ["//"],
     "MultiLineComments": [["/*", "*/"]],
-    "Extensions": [".cs"],
-    "FileNames": []
+    "Extensions": [".cs", ".csx", ".cake", ".csharp", ".razor"],
+    "FileNames": [],
+    "IsSupported": true
   },
   "C++": {
     "LineComments": ["//"],
     "MultiLineComments": [["/*", "*/"]],
     "Extensions": [".cpp", ".cc", ".cxx", ".c++"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
   },
   "C++ Header": {
     "LineComments": ["//"],
     "MultiLineComments": [["/*", "*/"]],
     "Extensions": [".hh", ".hpp", ".hxx", ".h++", ".ipp"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
   },
   "COBOL": {
     "LineComments": ["*", "/"],
     "MultiLineComments": [],
     "Extensions": [".cbl", ".ccp", ".cob", ".cobol", ".cpy"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
   },
   "CSS": {
     "LineComments": ["//"],
     "MultiLineComments": [["/*", "*/"]],
-    "Extensions": [".css"],
-    "FileNames": []
+    "Extensions": [".css", ".scss", ".sass", ".less"],
+    "FileNames": [],
+    "IsSupported": true
+  },
+  "Clojure": {
+    "LineComments": [";;"],
+    "MultiLineComments": [["#_", "_#"]],
+    "Extensions": [".clj", ".cljs", ".cljc", ".cljx"],
+    "FileNames": [],
+    "IsSupported": false
+  },
+  "CoffeeScript": {
+    "LineComments": ["#"],
+    "MultiLineComments": [["###", "###"]],
+    "Extensions": [".coffee", ".cjsx", ".iced", ".cakefile"],
+    "FileNames": [],
+    "IsSupported": false
+  },
+  "Cucumber": {
+    "LineComments": ["#"],
+    "MultiLineComments": [],
+    "Extensions": [".feature"],
+    "FileNames": [],
+    "IsSupported": false
+  },
+  "Cuda": {
+    "LineComments": ["//"],
+    "MultiLineComments": [["/*", "*/"]],
+    "Extensions": [".cu", ".cuh"],
+    "FileNames": [],
+    "IsSupported": false
+  },
+  "DOS Batch": {
+    "LineComments": ["REM", "::"],
+    "MultiLineComments": [],
+    "Extensions": [".bat", ".cmd"],
+    "FileNames": [],
+    "IsSupported": false
+  },
+  "Dart": {
+    "LineComments": ["//"],
+    "MultiLineComments": [["/*", "*/"]],
+    "Extensions": [".dart"],
+    "FileNames": [],
+    "IsSupported": true
+  },
+  "Delphi": {
+    "LineComments": ["//", "//"],
+    "MultiLineComments": [
+      ["{", "}"],
+      ["(*", "*)"]
+    ],
+    "Extensions": [".dpr", ".dfm", ".dpk", ".dproj"],
+    "FileNames": [],
+    "IsSupported": false
   },
   "Docker": {
     "LineComments": ["#"],
     "MultiLineComments": [],
     "Extensions": [".dockerfile"],
-    "FileNames": ["Dockerfile"]
+    "FileNames": ["Dockerfile"],
+    "IsSupported": true
+  },
+  "Elixir": {
+    "LineComments": ["#"],
+    "MultiLineComments": [["=begin", "=end"]],
+    "Extensions": [".ex", ".exs"],
+    "FileNames": [],
+    "IsSupported": false
+  },
+  "Erlang": {
+    "LineComments": ["%"],
+    "MultiLineComments": [["{-", "-}"]],
+    "Extensions": [
+      ".app.src",
+      ".emakefile",
+      ".erl",
+      ".hrl",
+      ".rebar.config",
+      ".rebar.config.lock",
+      ".rebar.lock",
+      ".xrl",
+      ".yrl"
+    ],
+    "FileNames": [],
+    "IsSupported": false
+  },
+  "F#": {
+    "LineComments": ["//"],
+    "MultiLineComments": [["(*", "*)"]],
+    "Extensions": [".fs", ".fsi", ".fsx"],
+    "FileNames": [],
+    "IsSupported": false
   },
   "Flex": {
     "LineComments": ["//"],
     "MultiLineComments": [["/*", "*/"]],
-    "Extensions": [".as"],
-    "FileNames": []
+    "Extensions": [".l", ".lex"],
+    "FileNames": [],
+    "IsSupported": true
+  },
+  "Fortran": {
+    "LineComments": ["!"],
+    "MultiLineComments": [["/*", "*/"]],
+    "Extensions": [
+      ".f",
+      ".f77",
+      ".f90",
+      ".f95",
+      ".for",
+      ".ftn",
+      ".pfo",
+      ".f03",
+      ".f08"
+    ],
+    "FileNames": [],
+    "IsSupported": false
   },
   "Golang": {
     "LineComments": ["//"],
     "MultiLineComments": [["/*", "*/"]],
     "Extensions": [".go"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
+  },
+  "Groovy": {
+    "LineComments": ["//"],
+    "MultiLineComments": [["/*", "*/"]],
+    "Extensions": [".groovy", ".gant", ".grt", ".gtpl", ".gvy", ".jenkinsfile"],
+    "FileNames": [],
+    "IsSupported": false
   },
   "HTML": {
     "LineComments": [],
@@ -85,152 +255,347 @@
       ".htm",
       ".cshtml",
       ".vbhtml",
-      ".aspx",
-      ".ascx",
       ".rhtml",
       ".erb",
       ".shtml",
       ".shtm",
       ".cmp"
     ],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
+  },
+  "Haskell": {
+    "LineComments": ["--"],
+    "MultiLineComments": [["{-", "-}"]],
+    "Extensions": [".hs", ".hsc", ".lhs"],
+    "FileNames": [],
+    "IsSupported": false
   },
   "JCL": {
     "LineComments": ["//"],
     "MultiLineComments": [["/*", "*/"]],
     "Extensions": [".jcl", ".JCL"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
+  },
+  "JSON": {
+    "LineComments": ["//"],
+    "MultiLineComments": [["/*", "*/"]],
+    "Extensions": [".json", ".JSON", ".jsonl", ".jsonld", ".jsonc", ".json5"],
+    "FileNames": [],
+    "IsSupported": true
+  },
+  "JSP": {
+    "LineComments": ["//", "//"],
+    "MultiLineComments": [["/*", "*/"]],
+    "Extensions": [".jsp", ".jspx", ".tag", ".tagx", ".jspxf", ".jspf"],
+    "FileNames": [],
+    "IsSupported": true
   },
   "Java": {
     "LineComments": ["//"],
     "MultiLineComments": [["/*", "*/"]],
     "Extensions": [".java", ".jav"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
   },
   "JavaScript": {
     "LineComments": ["//"],
     "MultiLineComments": [["/*", "*/"]],
-    "Extensions": [".js", ".jsx", ".jsp", ".jspx", ".jspf", ".mjs"],
-    "FileNames": []
+    "Extensions": [
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".es6",
+      ".bones",
+      ".jake",
+      ".jakefile",
+      ".jsb",
+      ".jscad",
+      ".jsfl",
+      ".jsm",
+      ".jss",
+      ".njs",
+      ".pac",
+      ".sjs",
+      ".ssjs",
+      ".xsjs",
+      ".xsjslib",
+      ".vue",
+      ".svelte"
+    ],
+    "FileNames": [],
+    "IsSupported": true
   },
   "Kotlin": {
     "LineComments": ["//"],
     "MultiLineComments": [["/*", "*/"]],
-    "Extensions": [".kt", ".kts"],
-    "FileNames": []
+    "Extensions": [".kt", ".kts", ".kotlin", ".ktm"],
+    "FileNames": [],
+    "IsSupported": true
+  },
+  "Lisp": {
+    "LineComments": [";"],
+    "MultiLineComments": [["#|", "|#"]],
+    "Extensions": [".lisp", ".lsp", ".el", ".asd", ".cl", ".jl"],
+    "FileNames": [],
+    "IsSupported": false
+  },
+  "Lua": {
+    "LineComments": ["--"],
+    "MultiLineComments": [["--[[", "]]"]],
+    "Extensions": [".lua"],
+    "FileNames": [],
+    "IsSupported": false
+  },
+  "Make": {
+    "LineComments": ["#"],
+    "MultiLineComments": [],
+    "Extensions": [".mk", ".makefile", ".Makefile", ".gnumake", ".gnumakefile"],
+    "FileNames": [],
+    "IsSupported": false
+  },
+  "Markdown": {
+    "LineComments": ["<!--", "-->"],
+    "MultiLineComments": [],
+    "Extensions": [
+      ".md",
+      ".markdown",
+      ".mdown",
+      ".mdwn",
+      ".mdx",
+      ".mkd",
+      ".mkdn",
+      ".mkdown",
+      ".ronn",
+      ".workbook"
+    ],
+    "FileNames": [],
+    "IsSupported": false
+  },
+  "OCaml": {
+    "LineComments": ["//", "(*"],
+    "MultiLineComments": [["(*", "*)"]],
+    "Extensions": [".ml", ".mli", ".eliom", ".eliomi", ".mll", ".mly"],
+    "FileNames": [],
+    "IsSupported": false
   },
   "Objective-C": {
     "LineComments": ["//"],
     "MultiLineComments": [["/*", "*/"]],
-    "Extensions": [".m"],
-    "FileNames": []
-  },
-  "Oracle PL/SQL": {
-    "LineComments": ["--"],
-    "MultiLineComments": [["/*", "*/"]],
-    "Extensions": [".pkb"],
-    "FileNames": []
+    "Extensions": [".m", ".mm", ".objc", ".objcpp"],
+    "FileNames": [],
+    "IsSupported": true
   },
   "PHP": {
     "LineComments": ["//", "#"],
     "MultiLineComments": [["/*", "*/"]],
-    "Extensions": [".php", ".php3", ".php4", ".php5", ".phtml", ".inc"],
-    "FileNames": []
+    "Extensions": [
+      ".php",
+      ".php3",
+      ".php4",
+      ".php5",
+      "php7",
+      ".phtml",
+      ".inc",
+      ".twig"
+    ],
+    "FileNames": [],
+    "IsSupported": true
   },
   "PL/I": {
     "LineComments": ["--"],
     "MultiLineComments": [["/*", "*/"]],
     "Extensions": [".pl1"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
+  },
+  "PL/SQL": {
+    "LineComments": ["--"],
+    "MultiLineComments": [["/*", "*/"]],
+    "Extensions": [
+      ".pkb",
+      ".pks",
+      ".pls",
+      ".plb",
+      ".plsql",
+      ".pql",
+      ".pck",
+      ".pckb",
+      ".pcks"
+    ],
+    "FileNames": [],
+    "IsSupported": true
+  },
+  "Pascal": {
+    "LineComments": ["//", "//"],
+    "MultiLineComments": [
+      ["{", "}"],
+      ["(*", "*)"]
+    ],
+    "Extensions": [".pas", ".p", ".pp", ".ppr", ".lpr"],
+    "FileNames": [],
+    "IsSupported": false
+  },
+  "Perl": {
+    "LineComments": ["#"],
+    "MultiLineComments": [["=begin", "=end"]],
+    "Extensions": [
+      ".pl",
+      ".pm",
+      ".pl6",
+      ".p6m",
+      ".p6l",
+      ".p6c",
+      ".p6d",
+      ".p6h",
+      ".p6t",
+      ".plx",
+      ".ph",
+      ".ph6"
+    ],
+    "FileNames": [],
+    "IsSupported": false
+  },
+  "PowerShell": {
+    "LineComments": ["#"],
+    "MultiLineComments": [["<#", "#>"]],
+    "Extensions": [".ps1", ".psm1", ".psd1"],
+    "FileNames": [],
+    "IsSupported": false
   },
   "Python": {
     "LineComments": ["#"],
     "MultiLineComments": [["\"\"\"", "\"\"\""]],
     "Extensions": [".py", ".python", ".ipynb"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
+  },
+  "R": {
+    "LineComments": ["#"],
+    "MultiLineComments": [["/*", "*/"]],
+    "Extensions": [".r", ".R", ".rmd"],
+    "FileNames": [],
+    "IsSupported": false
   },
   "RPG": {
     "LineComments": ["#"],
     "MultiLineComments": [],
-    "Extensions": [".rpg"],
-    "FileNames": []
+    "Extensions": [".rpg", ".rpgle", ".rpglep", ".rpgp"],
+    "FileNames": [],
+    "IsSupported": true
   },
   "Ruby": {
     "LineComments": ["#"],
     "MultiLineComments": [["=begin", "=end"]],
     "Extensions": [".rb"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
+  },
+  "Rust": {
+    "LineComments": ["//"],
+    "MultiLineComments": [["/*", "*/"]],
+    "Extensions": [".rs"],
+    "FileNames": [],
+    "IsSupported": true
   },
   "SQL": {
     "LineComments": ["--"],
     "MultiLineComments": [["/*", "*/"]],
     "Extensions": [".sql"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
   },
   "Scala": {
     "LineComments": ["//"],
     "MultiLineComments": [["/*", "*/"]],
-    "Extensions": [".scala"],
-    "FileNames": []
+    "Extensions": [".scala", ".sc", ".sbt", ".kojo"],
+    "FileNames": [],
+    "IsSupported": true
   },
-  "Scss": {
-    "LineComments": ["//"],
-    "MultiLineComments": [["/*", "*/"]],
-    "Extensions": [".scss"],
-    "FileNames": []
+  "Shell Script": {
+    "LineComments": ["#"],
+    "MultiLineComments": [],
+    "Extensions": [
+      ".sh",
+      ".bash",
+      ".zsh",
+      ".bashrc",
+      ".bash_profile",
+      ".zshrc",
+      ".zprofile"
+    ],
+    "FileNames": [],
+    "IsSupported": false
   },
   "Swift": {
     "LineComments": ["//"],
     "MultiLineComments": [["/*", "*/"]],
     "Extensions": [".swift"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
   },
   "T-SQL": {
     "LineComments": ["--"],
     "MultiLineComments": [],
     "Extensions": [".tsql"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
   },
   "Terraform": {
     "LineComments": [],
     "MultiLineComments": [],
-    "Extensions": [".tf"],
-    "FileNames": []
+    "Extensions": [".tf", ".tfvars", ".hcl", ".nomad"],
+    "FileNames": [],
+    "IsSupported": true
   },
   "TypeScript": {
     "LineComments": ["//"],
     "MultiLineComments": [["/*", "*/"]],
     "Extensions": [".ts", ".tsx"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
   },
   "Visual Basic .NET": {
     "LineComments": ["'"],
     "MultiLineComments": [],
     "Extensions": [".vb"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
   },
-  "Vue": {
-    "LineComments": ["<!--"],
-    "MultiLineComments": [["<!--", "-->"]],
-    "Extensions": [".vue"],
-    "FileNames": []
+  "Visual Basic 6": {
+    "LineComments": ["'"],
+    "MultiLineComments": [["/*", "*/"]],
+    "Extensions": [".bas", ".frm"],
+    "FileNames": [],
+    "IsSupported": true
   },
   "XHTML": {
     "LineComments": ["<!--"],
     "MultiLineComments": [["<!--", "-->"]],
     "Extensions": [".xhtml"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
   },
   "XML": {
     "LineComments": ["<!--"],
     "MultiLineComments": [["<!--", "-->"]],
     "Extensions": [".xml", ".XML", ".xsd", ".xsl"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
   },
   "YAML": {
     "LineComments": ["#"],
     "MultiLineComments": [],
     "Extensions": [".yaml", ".yml"],
-    "FileNames": []
+    "FileNames": [],
+    "IsSupported": true
+  },
+  "Zig": {
+    "LineComments": ["//"],
+    "MultiLineComments": [["/*", "*/"]],
+    "Extensions": [".zig"],
+    "FileNames": [],
+    "IsSupported": false
   }
 }

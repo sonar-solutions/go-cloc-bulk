@@ -18,13 +18,6 @@ type LanguageInfo struct {
 }
 
 var Languages = map[string]LanguageInfo{
-	"ActionScript": {
-		LineComments:      []string{"//"},
-		MultiLineComments: [][]string{{"/*", "*/"}},
-		Extensions:        []string{".as", ".actionscript"},
-		FileNames:         []string{},
-		IsSupported:       false,
-	},
 	"Abap": {
 		LineComments:      []string{"\""},
 		MultiLineComments: [][]string{{"/*", "*/"}},
@@ -32,12 +25,61 @@ var Languages = map[string]LanguageInfo{
 		FileNames:         []string{},
 		IsSupported:       true,
 	},
+	"ActionScript": {
+		LineComments:      []string{"//"},
+		MultiLineComments: [][]string{{"/*", "*/"}},
+		Extensions:        []string{".as", ".actionscript"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
+	"Ada": {
+		LineComments:      []string{"--"},
+		MultiLineComments: [][]string{{"/*", "*/"}},
+		Extensions:        []string{".ada", ".adb", ".ads", ".pad"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
 	"Apex": {
 		LineComments:      []string{"//"},
 		MultiLineComments: [][]string{{"/*", "*/"}},
 		Extensions:        []string{".cls", ".trigger"},
 		FileNames:         []string{},
 		IsSupported:       true,
+	},
+	"AppleScript": {
+		LineComments:      []string{"--"},
+		MultiLineComments: [][]string{{"(*", "*)"}},
+		Extensions:        []string{".applescript"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
+	"ASP": {
+		LineComments:      []string{"//", "'"},
+		MultiLineComments: [][]string{{"/*", "*/"}},
+		Extensions:        []string{".asa", ".ashx", ".asp", ".axd"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
+	"ASP.NET": {
+		LineComments:      []string{"//", "'"},
+		MultiLineComments: [][]string{{"/*", "*/"}},
+		Extensions:        []string{".asax", ".ascx", ".asmx", ".aspx", ".master", ".sitemap", ".webinfo"},
+		FileNames:         []string{},
+		IsSupported:       true,
+	},
+	"Assembly": {
+		LineComments:      []string{";"},
+		MultiLineComments: [][]string{},
+		Extensions:        []string{".asm", ".s", ".S", ".a51", ".nasm"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
+	"Bazel": {
+		LineComments:      []string{"#"},
+		MultiLineComments: [][]string{},
+		Extensions:        []string{".bazel", ".bzl"},
+		FileNames:         []string{},
+		IsSupported:       false,
 	},
 	"C": {
 		LineComments:      []string{"//"},
@@ -67,6 +109,27 @@ var Languages = map[string]LanguageInfo{
 		FileNames:         []string{},
 		IsSupported:       true,
 	},
+	"C#": {
+		LineComments:      []string{"//"},
+		MultiLineComments: [][]string{{"/*", "*/"}},
+		Extensions:        []string{".cs", ".csx", ".cake", ".csharp", ".razor"},
+		FileNames:         []string{},
+		IsSupported:       true,
+	},
+	"Clojure": {
+		LineComments:      []string{";;"},
+		MultiLineComments: [][]string{{"#_", "_#"}},
+		Extensions:        []string{".clj", ".cljs", ".cljc", ".cljx"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
+	"CoffeeScript": {
+		LineComments:      []string{"#"},
+		MultiLineComments: [][]string{{"###", "###"}},
+		Extensions:        []string{".coffee", ".cjsx", ".iced", ".cakefile"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
 	"COBOL": {
 		LineComments:      []string{"*", "/"},
 		MultiLineComments: [][]string{},
@@ -74,19 +137,96 @@ var Languages = map[string]LanguageInfo{
 		FileNames:         []string{},
 		IsSupported:       true,
 	},
-	"C#": {
-		LineComments:      []string{"//"},
-		MultiLineComments: [][]string{{"/*", "*/"}},
-		Extensions:        []string{".cs"},
-		FileNames:         []string{},
-		IsSupported:       true,
-	},
 	"CSS": {
 		LineComments:      []string{"//"},
 		MultiLineComments: [][]string{{"/*", "*/"}},
-		Extensions:        []string{".css"},
+		Extensions:        []string{".css", ".scss", ".sass", ".less"},
 		FileNames:         []string{},
 		IsSupported:       true,
+	},
+	"Cucumber": {
+		LineComments:      []string{"#"},
+		MultiLineComments: [][]string{},
+		Extensions:        []string{".feature"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
+	"Cuda": {
+		LineComments:      []string{"//"},
+		MultiLineComments: [][]string{{"/*", "*/"}},
+		Extensions:        []string{".cu", ".cuh"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
+	"Dart": {
+		LineComments:      []string{"//"},
+		MultiLineComments: [][]string{{"/*", "*/"}},
+		Extensions:        []string{".dart"},
+		FileNames:         []string{},
+		IsSupported:       true,
+	},
+	"Delphi": {
+		LineComments:      []string{"//", "//"},
+		MultiLineComments: [][]string{{"{", "}"}, {"(*", "*)"}},
+		Extensions:        []string{".dpr", ".dfm", ".dpk", ".dproj"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
+	"Docker": {
+		LineComments:      []string{"#"},
+		MultiLineComments: [][]string{},
+		Extensions:        []string{".dockerfile"},
+		FileNames:         []string{"Dockerfile"},
+		IsSupported:       true,
+	},
+	"DOS Batch": {
+		LineComments:      []string{"REM", "::"},
+		MultiLineComments: [][]string{},
+		Extensions:        []string{".bat", ".cmd"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
+	"Elixir": {
+		LineComments:      []string{"#"},
+		MultiLineComments: [][]string{{"=begin", "=end"}},
+		Extensions:        []string{".ex", ".exs"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
+	"Erlang": {
+		LineComments:      []string{"%"},
+		MultiLineComments: [][]string{{"{-", "-}"}},
+		Extensions:        []string{".app.src", ".emakefile", ".erl", ".hrl", ".rebar.config", ".rebar.config.lock", ".rebar.lock", ".xrl", ".yrl"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
+	"Flex": {
+		LineComments:      []string{"//"},
+		MultiLineComments: [][]string{{"/*", "*/"}},
+		Extensions:        []string{".l", ".lex"},
+		FileNames:         []string{},
+		IsSupported:       true,
+	},
+	"Fortran": {
+		LineComments:      []string{"!"},
+		MultiLineComments: [][]string{{"/*", "*/"}},
+		Extensions:        []string{".f", ".f77", ".f90", ".f95", ".for", ".ftn", ".pfo", ".f03", ".f08"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
+	"F#": {
+		LineComments:      []string{"//"},
+		MultiLineComments: [][]string{{"(*", "*)"}},
+		Extensions:        []string{".fs", ".fsi", ".fsx"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
+	"Groovy": {
+		LineComments:      []string{"//"},
+		MultiLineComments: [][]string{{"/*", "*/"}},
+		Extensions:        []string{".groovy", ".gant", ".grt", ".gtpl", ".gvy", ".jenkinsfile"},
+		FileNames:         []string{},
+		IsSupported:       false,
 	},
 	"Golang": {
 		LineComments:      []string{"//"},
@@ -95,10 +235,17 @@ var Languages = map[string]LanguageInfo{
 		FileNames:         []string{},
 		IsSupported:       true,
 	},
+	"Haskell": {
+		LineComments:      []string{"--"},
+		MultiLineComments: [][]string{{"{-", "-}"}},
+		Extensions:        []string{".hs", ".hsc", ".lhs"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
 	"HTML": {
 		LineComments:      []string{},
 		MultiLineComments: [][]string{{"<!--", "-->"}},
-		Extensions:        []string{".html", ".htm", ".cshtml", ".vbhtml", ".aspx", ".ascx", ".rhtml", ".erb", ".shtml", ".shtm", ".cmp"},
+		Extensions:        []string{".html", ".htm", ".cshtml", ".vbhtml", ".rhtml", ".erb", ".shtml", ".shtm", ".cmp"},
 		FileNames:         []string{},
 		IsSupported:       true,
 	},
@@ -112,7 +259,14 @@ var Languages = map[string]LanguageInfo{
 	"JavaScript": {
 		LineComments:      []string{"//"},
 		MultiLineComments: [][]string{{"/*", "*/"}},
-		Extensions:        []string{".js", ".jsx", ".jsp", ".jspx", ".jspf", ".mjs", ".vue"},
+		Extensions:        []string{".js", ".mjs", ".cjs", ".es6", ".bones", ".jake", ".jakefile", ".jsb", ".jscad", ".jsfl", ".jsm", ".jss", ".njs", ".pac", ".sjs", ".ssjs", ".xsjs", ".xsjslib", ".vue", ".svelte"},
+		FileNames:         []string{},
+		IsSupported:       true,
+	},
+	"JCL": {
+		LineComments:      []string{"//"},
+		MultiLineComments: [][]string{{"/*", "*/"}},
+		Extensions:        []string{".jcl", ".JCL"},
 		FileNames:         []string{},
 		IsSupported:       true,
 	},
@@ -124,31 +278,24 @@ var Languages = map[string]LanguageInfo{
 		FileNames:         []string{},
 		IsSupported:       true,
 	},
-	"Kotlin": {
-		LineComments:      []string{"//"},
+	"JSP": {
+		LineComments:      []string{"//", "//"},
 		MultiLineComments: [][]string{{"/*", "*/"}},
-		Extensions:        []string{".kt", ".kts"},
+		Extensions:        []string{".jsp", ".jspx", ".tag", ".tagx", ".jspxf", ".jspf"},
 		FileNames:         []string{},
 		IsSupported:       true,
 	},
-	"Fortran": {
-		LineComments:      []string{"!"},
-		MultiLineComments: [][]string{{"/*", "*/"}},
-		Extensions:        []string{".f", ".for", ".f90", ".f95", ".f03", ".f08", ".f18", ".f20"},
-		FileNames:         []string{},
-		IsSupported:       false,
-	},
-	"Flex": {
+	"Kotlin": {
 		LineComments:      []string{"//"},
 		MultiLineComments: [][]string{{"/*", "*/"}},
-		Extensions:        []string{".as"},
+		Extensions:        []string{".kt", ".kts", ".kotlin", ".ktm"},
 		FileNames:         []string{},
-		IsSupported:       false,
+		IsSupported:       true,
 	},
-	"Groovy": {
-		LineComments:      []string{"//"},
-		MultiLineComments: [][]string{{"/*", "*/"}},
-		Extensions:        []string{".groovy", ".gvy", ".gy"},
+	"Lisp": {
+		LineComments:      []string{";"},
+		MultiLineComments: [][]string{{"#|", "|#"}},
+		Extensions:        []string{".lisp", ".lsp", ".el", ".asd", ".cl", ".jl"},
 		FileNames:         []string{},
 		IsSupported:       false,
 	},
@@ -159,31 +306,52 @@ var Languages = map[string]LanguageInfo{
 		FileNames:         []string{},
 		IsSupported:       false,
 	},
+	"Make": {
+		LineComments:      []string{"#"},
+		MultiLineComments: [][]string{},
+		Extensions:        []string{".mk", ".makefile", ".Makefile", ".gnumake", ".gnumakefile"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
+	"Markdown": {
+		LineComments:      []string{"<!--", "-->"},
+		MultiLineComments: [][]string{},
+		Extensions:        []string{".md", ".markdown", ".mdown", ".mdwn", ".mdx", ".mkd", ".mkdn", ".mkdown", ".ronn", ".workbook"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
+	"Objective-C": {
+		LineComments:      []string{"//"},
+		MultiLineComments: [][]string{{"/*", "*/"}},
+		Extensions:        []string{".m", ".mm", ".objc", ".objcpp"},
+		FileNames:         []string{},
+		IsSupported:       true,
+	},
+	"OCaml": {
+		LineComments:      []string{"//", "(*"},
+		MultiLineComments: [][]string{{"(*", "*)"}},
+		Extensions:        []string{".ml", ".mli", ".eliom", ".eliomi", ".mll", ".mly"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
+	"Pascal": {
+		LineComments:      []string{"//", "//"},
+		MultiLineComments: [][]string{{"{", "}"}, {"(*", "*)"}},
+		Extensions:        []string{".pas", ".p", ".pp", ".ppr", ".lpr"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
 	"Perl": {
 		LineComments:      []string{"#"},
 		MultiLineComments: [][]string{{"=begin", "=end"}},
-		Extensions:        []string{".pl", ".pm", ".t", ".pod"},
+		Extensions:        []string{".pl", ".pm", ".pl6", ".p6m", ".p6l", ".p6c", ".p6d", ".p6h", ".p6t", ".plx", ".ph", ".ph6"},
 		FileNames:         []string{},
 		IsSupported:       false,
 	},
 	"PHP": {
 		LineComments:      []string{"//", "#"},
 		MultiLineComments: [][]string{{"/*", "*/"}},
-		Extensions:        []string{".php", ".php3", ".php4", ".php5", ".phtml", ".inc"},
-		FileNames:         []string{},
-		IsSupported:       true,
-	},
-	"Objective-C": {
-		LineComments:      []string{"//"},
-		MultiLineComments: [][]string{{"/*", "*/"}},
-		Extensions:        []string{".m"},
-		FileNames:         []string{},
-		IsSupported:       true,
-	},
-	"Oracle PL/SQL": {
-		LineComments:      []string{"--"},
-		MultiLineComments: [][]string{{"/*", "*/"}},
-		Extensions:        []string{".pkb"},
+		Extensions:        []string{".php", ".php3", ".php4", ".php5", "php7", ".phtml", ".inc", ".twig"},
 		FileNames:         []string{},
 		IsSupported:       true,
 	},
@@ -194,6 +362,20 @@ var Languages = map[string]LanguageInfo{
 		FileNames:         []string{},
 		IsSupported:       true,
 	},
+	"PL/SQL": {
+		LineComments:      []string{"--"},
+		MultiLineComments: [][]string{{"/*", "*/"}},
+		Extensions:        []string{".pkb", ".pks", ".pls", ".plb", ".plsql", ".pql", ".pck", ".pckb", ".pcks"},
+		FileNames:         []string{},
+		IsSupported:       true,
+	},
+	"PowerShell": {
+		LineComments:      []string{"#"},
+		MultiLineComments: [][]string{{"<#", "#>"}},
+		Extensions:        []string{".ps1", ".psm1", ".psd1"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
 	"Python": {
 		LineComments:      []string{"#"},
 		MultiLineComments: [][]string{{"\"\"\"", "\"\"\""}},
@@ -201,10 +383,17 @@ var Languages = map[string]LanguageInfo{
 		FileNames:         []string{},
 		IsSupported:       true,
 	},
+	"R": {
+		LineComments:      []string{"#"},
+		MultiLineComments: [][]string{{"/*", "*/"}},
+		Extensions:        []string{".r", ".R", ".rmd"},
+		FileNames:         []string{},
+		IsSupported:       false,
+	},
 	"RPG": {
 		LineComments:      []string{"#"},
 		MultiLineComments: [][]string{},
-		Extensions:        []string{".rpg"},
+		Extensions:        []string{".rpg", ".rpgle", ".rpglep", ".rpgp"},
 		FileNames:         []string{},
 		IsSupported:       true,
 	},
@@ -215,19 +404,26 @@ var Languages = map[string]LanguageInfo{
 		FileNames:         []string{},
 		IsSupported:       true,
 	},
-	"Scala": {
+	"Rust": {
 		LineComments:      []string{"//"},
 		MultiLineComments: [][]string{{"/*", "*/"}},
-		Extensions:        []string{".scala"},
+		Extensions:        []string{".rs"},
 		FileNames:         []string{},
 		IsSupported:       true,
 	},
-	"Scss": {
+	"Scala": {
 		LineComments:      []string{"//"},
 		MultiLineComments: [][]string{{"/*", "*/"}},
-		Extensions:        []string{".scss"},
+		Extensions:        []string{".scala", ".sc", ".sbt", ".kojo"},
 		FileNames:         []string{},
 		IsSupported:       true,
+	},
+	"Shell Script": {
+		LineComments:      []string{"#"},
+		MultiLineComments: [][]string{},
+		Extensions:        []string{".sh", ".bash", ".zsh", ".bashrc", ".bash_profile", ".zshrc", ".zprofile"},
+		FileNames:         []string{},
+		IsSupported:       false,
 	},
 	"SQL": {
 		LineComments:      []string{"--"},
@@ -240,6 +436,13 @@ var Languages = map[string]LanguageInfo{
 		LineComments:      []string{"//"},
 		MultiLineComments: [][]string{{"/*", "*/"}},
 		Extensions:        []string{".swift"},
+		FileNames:         []string{},
+		IsSupported:       true,
+	},
+	"Terraform": {
+		LineComments:      []string{},
+		MultiLineComments: [][]string{},
+		Extensions:        []string{".tf", ".tfvars", ".hcl", ".nomad"},
 		FileNames:         []string{},
 		IsSupported:       true,
 	},
@@ -264,6 +467,13 @@ var Languages = map[string]LanguageInfo{
 		FileNames:         []string{},
 		IsSupported:       true,
 	},
+	"Visual Basic 6": {
+		LineComments:      []string{"'"},
+		MultiLineComments: [][]string{{"/*", "*/"}},
+		Extensions:        []string{".bas", ".frm"},
+		FileNames:         []string{},
+		IsSupported:       true,
+	},
 	"XML": {
 		LineComments:      []string{"<!--"},
 		MultiLineComments: [][]string{{"<!--", "-->"}},
@@ -285,26 +495,12 @@ var Languages = map[string]LanguageInfo{
 		FileNames:         []string{},
 		IsSupported:       true,
 	},
-	"Terraform": {
-		LineComments:      []string{},
-		MultiLineComments: [][]string{},
-		Extensions:        []string{".tf"},
-		FileNames:         []string{},
-		IsSupported:       true,
-	},
-	"JCL": {
+	"Zig": {
 		LineComments:      []string{"//"},
 		MultiLineComments: [][]string{{"/*", "*/"}},
-		Extensions:        []string{".jcl", ".JCL"},
+		Extensions:        []string{".zig"},
 		FileNames:         []string{},
-		IsSupported:       true,
-	},
-	"Docker": {
-		LineComments:      []string{"#"},
-		MultiLineComments: [][]string{},
-		Extensions:        []string{".dockerfile"},
-		FileNames:         []string{"Dockerfile"},
-		IsSupported:       true,
+		IsSupported:       false,
 	},
 }
 
@@ -365,17 +561,43 @@ func PrintLanguages() {
 func LoadLanguages(fileName string) {
 	file, err := os.Open(fileName)
 	if err != nil {
+		logger.Error("Error opening languages config file: ", err)
 		logger.LogStackTraceAndExit(err)
 	}
 	defer file.Close()
 
 	byteValue, err := io.ReadAll(file)
 	if err != nil {
+		logger.Error("Error reading languages config file: ", err)
 		logger.LogStackTraceAndExit(err)
 	}
 
-	err = json.Unmarshal(byteValue, &Languages)
+	// Create a temporary map and unmarshal into it
+	var tempLanguages map[string]LanguageInfo
+	err = json.Unmarshal(byteValue, &tempLanguages)
 	if err != nil {
+		logger.Error("Error unmarshalling languages config file: ", err)
 		logger.LogStackTraceAndExit(err)
 	}
+
+	// Replace the global Languages map with the temporary one
+	Languages = tempLanguages
+}
+
+func ValidateLanguagesConfig() error {
+	fileSuffixToLanguage := make(map[string]string)
+
+	for langName, langInfo := range Languages {
+		for _, fileSuffix := range langInfo.Extensions {
+			currLanguage, isFound := fileSuffixToLanguage[fileSuffix]
+			if isFound { // check if the suffix already exists
+				return fmt.Errorf("duplicate file suffix found: the file suffix '%s' for language '%s' is already defined in the configuration and is also defined for language '%s'", fileSuffix, langName, currLanguage)
+			}
+			fileSuffixToLanguage[fileSuffix] = langName // add the suffix to the map
+		}
+	}
+	return nil
+}
+func GetLanguagesConfig() map[string]LanguageInfo {
+	return Languages
 }
