@@ -310,7 +310,7 @@ var Languages = map[string]LanguageInfo{
 		LineComments:      []string{"#"},
 		MultiLineComments: [][]string{},
 		Extensions:        []string{".mk", ".makefile", ".Makefile", ".gnumake", ".gnumakefile"},
-		FileNames:         []string{},
+		FileNames:         []string{"Makefile", "makefile", "GNUmakefile"},
 		IsSupported:       false,
 	},
 	"Markdown": {
