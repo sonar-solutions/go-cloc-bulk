@@ -19,12 +19,11 @@ const (
 )
 
 type CLIArgs struct {
-	LogLevel                        string
-	LocalScanFilePath               string
-	IgnorePatterns                  []string
-	CsvFilePath                     string
-	HtmlReportsDirectoryPath        string
-	OverrideLanguagesConfigFilePath string
+	LogLevel                 string
+	LocalScanFilePath        string
+	IgnorePatterns           []string
+	CsvFilePath              string
+	HtmlReportsDirectoryPath string
 }
 
 func CleanLocalFilePath(targetPath string) string {
@@ -36,98 +35,105 @@ func CleanLocalFilePath(targetPath string) string {
 	return targetPath
 }
 
-func ParseArgsFromCLI() CLIArgs {
-	// print out arguments
-	printLanguagesArg := flag.Bool("print-languages", false, "Prints out the supported languages, file suffixes, and comment configurations. Does not run the tool.")
+func GetArgsFromCLI() CLIArgs {
+	// Parse command line arguments
+	args := ParseArgsFromCLI()
 
-	// optional arguments
+	// Ensure the local scan file path is absolute
+	args.LocalScanFilePath = CleanLocalFilePath(args.LocalScanFilePath)
+
+	// Validate the local scan file path exists
+	if _, err := os.Stat(args.LocalScanFilePath); os.IsNotExist(err) {
+		logger.Error("The specified path does not exist: ", args.LocalScanFilePath)
+		os.Exit(-1)
+	}
+
+	return args
+}
+
+func ParseArgsFromCLI() CLIArgs {
+	// Define flags
+	printLanguagesArg := flag.Bool("print-languages", false, "Prints out the supported languages, file suffixes, and comment configurations. Does not run the tool.")
 	logLevelArg := flag.String("log-level", "INFO", "Log level - DEBUG, INFO, WARN, ERROR")
 	ignoreFilePathArg := flag.String("ignore-file-path", "", "Path to your ignore file. Defines directories and files to exclude when scanning. Please see the README.md for how to format your ignore configuration")
 	csvFilePathArg := flag.String("csv", "", "Path to dump results to a csv file, otherwise results are printed to standard out")
 	htmlReportsDirectoryPathArg := flag.String("html", "", "Path to dump HTML reports into a specified directory, otherwise HTML reports are not generated. Note this directory must already exist.")
 	overrideLanguageConfigFilePathArg := flag.String("override-languages", "", "Path to languages configuration to override the default configuration.")
 
-	// parse the CLI arguments
+	logger.Info("Parsing CLI arguments")
+	// Parse flags
 	flag.Parse()
+	// Parse non-flag arguments
+	cliArgs := flag.Args()
+	logger.Debug("Non-flag arguments: ", cliArgs)
+	// If there are any non-flag arguments, we assume the first one is the directory to scan
+	if len(cliArgs) > 0 {
+		// Parse any remaining flags after the first non-flag argument
+		flag.CommandLine.Parse(cliArgs[1:])
+	}
 
-	// dereference all CLI args to make it easier to use
-	printLanguages := *printLanguagesArg
+	// Set log level immediately after parsing
+	logger.Info("Setting Log Level to " + *logLevelArg)
+	logger.SetLogLevel(logger.ConvertStringToLogLevel(*logLevelArg))
+	logger.SetOutput(os.Stdout)
 
-	// print out languages
-	if printLanguages {
+	// Print out the command line arguments for debugging purposes
+	logger.Debug("Command Line Arguments:")
+	logger.Debug("print-languages: ", *printLanguagesArg)
+	logger.Debug("log-level: ", *logLevelArg)
+	logger.Debug("ignore-file-path: ", *ignoreFilePathArg)
+	logger.Debug("csv-file-path: ", *csvFilePathArg)
+	logger.Debug("html-reports-directory-path: ", *htmlReportsDirectoryPathArg)
+	logger.Debug("override-language-config-file-path: ", *overrideLanguageConfigFilePathArg)
+
+	// Override languages config if specified
+	if *overrideLanguageConfigFilePathArg != "" {
+		logger.Info("Overriding default languages with ", *overrideLanguageConfigFilePathArg)
+		scanner.LoadLanguages(*overrideLanguageConfigFilePathArg)
+		scanner.ValidateLanguagesConfig()
+		logger.Debug("Successfully loaded languages configuration from ", *overrideLanguageConfigFilePathArg)
+	}
+
+	// Handle short-circuit flag: print languages and exit
+	if *printLanguagesArg {
 		scanner.PrintLanguages()
 		os.Exit(0)
 	}
 
-	// Collect the remaining arguments
-	cliArgs := flag.Args()
-
-	// Ensure at least one argument
+	// Ensure exactly one directory argument is provided
 	if len(cliArgs) < 1 {
 		logger.Error("Requires a path to the file or directory to scan as the first command line argument, ex: 'go-cloc file1.js'")
 		os.Exit(-1)
 	}
 
-	// Parse any remaining flags after the first non-flag argument
-	flag.CommandLine.Parse(cliArgs[1:])
-
-	// dereference all CLI args to make it easier to use
-	logLevel := *logLevelArg
-	ignoreFilePath := *ignoreFilePathArg
-	csvFilePath := *csvFilePathArg
-	htmlReportsDirectoryPath := *htmlReportsDirectoryPathArg
-	overrideLanguageConfigFilePath := *overrideLanguageConfigFilePathArg
+	// Set file path to scan
+	localScanFilePath := CleanLocalFilePath(cliArgs[0])
 
 	// Check if the directory exists
-	if htmlReportsDirectoryPath != "" {
+	if *htmlReportsDirectoryPathArg != "" {
 		// only create the folder if the folder does not exist
-		_, err := os.Stat(htmlReportsDirectoryPath)
+		_, err := os.Stat(*htmlReportsDirectoryPathArg)
 		if os.IsNotExist(err) {
-			logger.Error("Folder does not exist. Please create it first. Path: ", htmlReportsDirectoryPath)
+			logger.Error("Folder does not exist. Please create it first. Path: ", *htmlReportsDirectoryPathArg)
 			os.Exit(-1)
 		}
 	}
 
-	// set log level
-	logger.SetLogLevel(logger.ConvertStringToLogLevel(logLevel))
-	logger.SetOutput(os.Stdout)
-
-	logger.Info("Setting Log Level to " + logLevel)
-	logger.Info("Parsing CLI arguments")
-
-	// print out arguments
-	logger.Debug("csv-file-path: ", csvFilePath)
-	logger.Debug("html-reports-directory-path: ", htmlReportsDirectoryPath)
-	logger.Debug("ignore-file-path: ", ignoreFilePath)
-	logger.Debug("override-language-config-file-path: ", overrideLanguageConfigFilePath)
-
-	// Set file path to scan
-	localScanFilePath := CleanLocalFilePath(cliArgs[0])
-
-	// validate optional arguments
-
 	// parse ignore patterns
 	ignorePatterns := []string{}
-	if ignoreFilePath != "" {
-		logger.Debug("Parsing ignore-file ", ignoreFilePath)
-		ignorePatterns = scanner.ReadIgnoreFile(ignoreFilePath)
-		logger.Debug("Successfully read in the ignore-file ", ignoreFilePath)
+	if *ignoreFilePathArg != "" {
+		logger.Debug("Parsing ignore-file ", *ignoreFilePathArg)
+		ignorePatterns = scanner.ReadIgnoreFile(*ignoreFilePathArg)
+		logger.Debug("Successfully read in the ignore-file ", *ignoreFilePathArg)
 		logger.Debug("Ignore Patterns: ", ignorePatterns)
 	}
 
-	// override languages config
-	if overrideLanguageConfigFilePath != "" {
-		logger.Debug("Overriding default languages with ", overrideLanguageConfigFilePath)
-		scanner.LoadLanguages(overrideLanguageConfigFilePath)
-	}
-
 	args := CLIArgs{
-		LogLevel:                        logLevel,
-		LocalScanFilePath:               localScanFilePath,
-		IgnorePatterns:                  ignorePatterns,
-		CsvFilePath:                     csvFilePath,
-		HtmlReportsDirectoryPath:        htmlReportsDirectoryPath,
-		OverrideLanguagesConfigFilePath: overrideLanguageConfigFilePath,
+		LogLevel:                 *logLevelArg,
+		LocalScanFilePath:        localScanFilePath,
+		IgnorePatterns:           ignorePatterns,
+		CsvFilePath:              *csvFilePathArg,
+		HtmlReportsDirectoryPath: *htmlReportsDirectoryPathArg,
 	}
 
 	return args
