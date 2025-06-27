@@ -51,6 +51,21 @@ func GetArgsFromCLI() CLIArgs {
 	return args
 }
 
+// create directory if it doesn't exist
+func CreateDirectoryIfNotExists(dirPath string) error {
+	if _, err := os.Stat(dirPath); os.IsNotExist(err) {
+		logger.Debug("Creating directory: ", dirPath)
+		err = os.MkdirAll(dirPath, 0755)
+		if err != nil {
+			logger.Error("Error creating directory: ", err)
+			return err
+		}
+	} else {
+		logger.Debug("Directory already exists: ", dirPath)
+	}
+	return nil
+}
+
 func ParseArgsFromCLI() CLIArgs {
 	// Define flags
 	printLanguagesArg := flag.Bool("print-languages", false, "Prints out the supported languages, file suffixes, and comment configurations. Does not run the tool.")
@@ -108,16 +123,6 @@ func ParseArgsFromCLI() CLIArgs {
 
 	// Set file path to scan
 	localScanFilePath := CleanLocalFilePath(cliArgs[0])
-
-	// Check if the directory exists
-	if *htmlReportsDirectoryPathArg != "" {
-		// only create the folder if the folder does not exist
-		_, err := os.Stat(*htmlReportsDirectoryPathArg)
-		if os.IsNotExist(err) {
-			logger.Error("Folder does not exist. Please create it first. Path: ", *htmlReportsDirectoryPathArg)
-			os.Exit(-1)
-		}
-	}
 
 	// parse ignore patterns
 	ignorePatterns := []string{}
