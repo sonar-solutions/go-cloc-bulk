@@ -33,7 +33,11 @@ func main() {
 		// convert results into records for CSV or command line output
 		records := report.ConvertFileResultsIntoRecords(fileScanResultsArr, repoTotalResult)
 		logger.Debug("Dumping results by file to ", args.CsvFilePath)
-		report.WriteCsv(args.CsvFilePath, records)
+		err := report.WriteCsv(args.CsvFilePath, records)
+		if err != nil {
+			logger.Error("CSV reports will not be generated. Please check the file path and permissions.")
+			logger.LogStackTraceAndExit(err)
+		}
 		logger.Info("Done! Results can be found ", args.CsvFilePath)
 	}
 
@@ -41,20 +45,18 @@ func main() {
 	if args.HtmlReportsDirectoryPath != "" {
 		createHTMLDirectoryErr := utilities.CreateDirectoryIfNotExists(args.HtmlReportsDirectoryPath)
 		if createHTMLDirectoryErr != nil {
-			logger.Error("Error creating HTML reports directory: ", createHTMLDirectoryErr)
-			logger.Error("HTML reports will not be generated. Please check the directory path and permissions.")
-		} else {
-			logger.Info("Dumping HTML report to ", args.HtmlReportsDirectoryPath)
-			fileNames, fileContents := report.GenerateHTMLReports(fileScanResultsArr)
-
-			for index, _ := range fileNames {
-				fileName := fileNames[index]
-				fileContent := fileContents[index]
-				report.WriteStringToFile(filepath.Join(args.HtmlReportsDirectoryPath, fileName), fileContent)
-			}
-			report.DumpSVGs(args.HtmlReportsDirectoryPath)
-			logger.Info("Done! HTML report for ", args.LocalScanFilePath, " can be found in ", args.HtmlReportsDirectoryPath)
+			logger.LogStackTraceAndExit(createHTMLDirectoryErr)
 		}
+		logger.Info("Dumping HTML report to ", args.HtmlReportsDirectoryPath)
+		fileNames, fileContents := report.GenerateHTMLReports(fileScanResultsArr)
+
+		for index, _ := range fileNames {
+			fileName := fileNames[index]
+			fileContent := fileContents[index]
+			report.WriteStringToFile(filepath.Join(args.HtmlReportsDirectoryPath, fileName), fileContent)
+		}
+		report.DumpSVGs(args.HtmlReportsDirectoryPath)
+		logger.Info("Done! HTML report for ", args.LocalScanFilePath, " can be found in ", args.HtmlReportsDirectoryPath)
 	}
 	logger.Info("Printing total LOC for ALL languages ...")
 	report.PrintResultsToCommandLine(repoTotalResult.CodeLineCount, repoTotalResult.CommentsLineCount, repoTotalResult.BlankLineCount)
