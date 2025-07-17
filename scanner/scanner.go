@@ -191,14 +191,20 @@ func isBlankLine(line string) bool {
 	return len(line) == 0
 }
 
+func formatRegexPattern(pattern string) string {
+	// Escape special characters and replace '*' with '.*'
+	pattern = strings.ReplaceAll(pattern, "\\", "\\\\") // Escape backslashes first for Windows compatibility and spaces in Unix paths
+	pattern = strings.ReplaceAll(pattern, ".", "\\.")
+	pattern = strings.ReplaceAll(pattern, "*", ".*")
+	return "^" + pattern + "$"
+}
+
 func loadIgnorePatterns(patterns []string) []*regexp.Regexp {
 	var regexps []*regexp.Regexp
 	for _, pattern := range patterns {
-		// got *.json
-		// "^(.*\.json)$"
-		newPattern := "^" + strings.ReplaceAll(strings.ReplaceAll(pattern, ".", "\\."), "*", ".*") + "$"
-		regexps = append(regexps, regexp.MustCompile(newPattern))
-		logger.Debug("Adding pattern " + newPattern)
+		formattedPattern := formatRegexPattern(pattern)
+		logger.Debug("Compiling pattern " + formattedPattern)
+		regexps = append(regexps, regexp.MustCompile(formattedPattern))
 	}
 	return regexps
 }

@@ -195,3 +195,59 @@ func Test_scanner_LoadLanguages(t *testing.T) {
 	assert.Equal(t, "YAML", language)
 	assert.Equal(t, true, found)
 }
+
+func Test_scanner_formatRegexPattern(t *testing.T) {
+	// Test #1
+	pattern := "*.js"
+	formattedPattern := formatRegexPattern(pattern)
+	assert.Equal(t, "^.*\\.js$", formattedPattern)
+
+	// Test #2
+	pattern = "test*"
+	formattedPattern = formatRegexPattern(pattern)
+	assert.Equal(t, "^test.*$", formattedPattern)
+
+	// Test #3
+	pattern = "test.js"
+	formattedPattern = formatRegexPattern(pattern)
+	assert.Equal(t, "^test\\.js$", formattedPattern)
+
+	// Test #4
+	pattern = "C:\\Users\\Documents\\*"
+	formattedPattern = formatRegexPattern(pattern)
+	assert.Equal(t, "^C:\\\\Users\\\\Documents\\\\.*$", formattedPattern)
+
+	// Test #5
+	pattern = "/home/test/*"
+	formattedPattern = formatRegexPattern(pattern)
+	assert.Equal(t, "^/home/test/.*$", formattedPattern)
+
+	// Test #6
+	pattern = "*.js"
+	formattedPattern = formatRegexPattern(pattern)
+	assert.Equal(t, "^.*\\.js$", formattedPattern)
+
+	// Test #7
+	pattern = "/home/test\\ with\\ spaces/*"
+	formattedPattern = formatRegexPattern(pattern)
+	assert.Equal(t, "^/home/test\\\\ with\\\\ spaces/.*$", formattedPattern)
+
+}
+
+func Test_scanner_loadIgnorePatterns_Windows(t *testing.T) {
+	ignorePathFromFile := "C:\\Users\\Documents\\*"
+	regexPatterns := loadIgnorePatterns([]string{ignorePathFromFile})
+	absoluteWindowsFilePath := "C:\\Users\\Documents\\test.js"
+
+	// Assert
+	assert.Equal(t, true, regexPatterns[0].Match([]byte(absoluteWindowsFilePath)))
+}
+
+func Test_scanner_loadIgnorePatterns_Unix_With_Spaces(t *testing.T) {
+	ignorePathFromFile := "/home/test\\ with\\ spaces/*"
+	regexPatterns := loadIgnorePatterns([]string{ignorePathFromFile})
+	absoluteUnixFilePath := "/home/test\\ with\\ spaces/test.js"
+
+	// Assert
+	assert.Equal(t, true, regexPatterns[0].Match([]byte(absoluteUnixFilePath)))
+}
