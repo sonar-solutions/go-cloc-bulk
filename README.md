@@ -6,9 +6,13 @@
 
 ## Overview
 
-This tool quickly calculates an accurate Lines of Code (LOC) count for a file or directory with a single executable. 
+This tool quickly calculates an estimated Lines of Code (LOC) count for a file or directory with a single executable. 
 
 It is **significantly more performant** than the [cloc](https://github.com/AlDanial/cloc) tool. See [performance benchmark](#performance-benchmarks) for comparisons.
+
+## Legal Disclaimer
+
+**Important Notice:** This tool is designed to provide quick estimates and does not guarantee accuracy for commercial or production use. If further accuracy is needed, please use industry standard tools. This tool is provided for convenience purposes only.
 
 ## Installation
 

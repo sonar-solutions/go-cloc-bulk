@@ -58,6 +58,9 @@ func main() {
 		report.DumpSVGs(args.HtmlReportsDirectoryPath)
 		logger.Info("Done! HTML report for ", args.LocalScanFilePath, " can be found in ", args.HtmlReportsDirectoryPath)
 	}
+	logger.Info("")
+	logger.Info("DISCLAIMER: This tool does not guarantee the accuracy of estimates for commercial conversations. Use industry standard tools for production accuracy requirements.")
+	logger.Info("")
 	logger.Info("Printing total LOC for ALL languages ...")
 	report.PrintResultsToCommandLine(repoTotalResult.CodeLineCount, repoTotalResult.CommentsLineCount, repoTotalResult.BlankLineCount)
 	logger.Info("Printing LOC for SUPPORTED languages ...")
