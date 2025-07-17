@@ -266,14 +266,16 @@ func WalkDirectory(targetPath string, ignorePatterns []string) []string {
 		}
 		// Check if the file matches any of the ignore patterns
 		for _, pattern := range patterns {
-			if pattern.Match([]byte(path)) {
+			if pattern.Match([]byte(absPath)) {
 				if info.IsDir() {
-					logger.Debug("Skipping dir - ", path, " - pattern match - ", pattern)
+					logger.Debug("Skipping dir - ", absPath, " - pattern match - ", pattern)
 					return filepath.SkipDir
 				} else {
-					logger.Debug("Skipping file - ", path, " - pattern match - ", pattern)
+					logger.Debug("Skipping file - ", absPath, " - pattern match - ", pattern)
 				}
 				return nil
+			} else {
+				logger.Debug("Keeping file - ", absPath, " - pattern not matched - ", pattern)
 			}
 		}
 		if !info.IsDir() {
@@ -288,7 +290,7 @@ func WalkDirectory(targetPath string, ignorePatterns []string) []string {
 			if found {
 				filePaths = append(filePaths, absPath)
 			} else {
-				logger.Debug("Skipping file - ", path, " suffix - ", suffix, " - not supported")
+				logger.Debug("Skipping file - ", absPath, " suffix - ", suffix, " - not supported")
 			}
 			return nil
 		}

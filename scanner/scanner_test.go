@@ -3,6 +3,7 @@ package scanner
 import (
 	"fmt"
 	"go-cloc/logger"
+	"path/filepath"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -142,13 +143,27 @@ func Test_scanner_WalkDirectory_no_ignores(t *testing.T) {
 	assert.Equal(t, 2, len(result))
 }
 
-func Test_scanner_WalkDirectory_with_ignores(t *testing.T) {
-	ignorePatterns := []string{"*easy.js"}
+func Test_scanner_WalkDirectory_with_ignores_absolute_path(t *testing.T) {
+	absoluteFilePath, _ := filepath.Abs("test-files/js/easy.js")
+	ignorePatterns := []string{absoluteFilePath}
 
 	result := WalkDirectory("test-files/js", ignorePatterns)
 
 	// Assert
-	assert.Equal(t, 1, len(result))
+	for _, filePath := range result {
+		if filePath == absoluteFilePath {
+			t.Errorf("File %s should have been ignored", filePath)
+		}
+	}
+}
+
+func Test_scanner_WalkDirectory_with_ignores_wildcards(t *testing.T) {
+	ignorePatterns := []string{"*.js"}
+
+	result := WalkDirectory("test-files/js", ignorePatterns)
+
+	// Assert
+	assert.Equal(t, 0, len(result), "All .js files should have been ignored")
 }
 
 func Test_scanner_WalkDirectory_containing_with_files_without_suffix(t *testing.T) {
