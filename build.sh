@@ -51,3 +51,8 @@ for platform in "${platforms[@]}"; do
 done
 
 echo "All builds are zipped in the $OUTPUT_DIR directory."
+
+# Copy the install.sh script to the builds directory
+cp install.sh "$OUTPUT_DIR/install.sh"
+
+echo "Install script copied to $OUTPUT_DIR/install.sh"
