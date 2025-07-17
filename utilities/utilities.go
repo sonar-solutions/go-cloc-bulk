@@ -2,11 +2,16 @@ package utilities
 
 import (
 	"flag"
+	"fmt"
 	"go-cloc/logger"
 	"go-cloc/scanner"
 	"os"
 	"path/filepath"
 	"strings"
+)
+
+const (
+	VERSION string = "2.0.2" // Update this version when making releases)
 )
 
 // Modes
@@ -68,6 +73,7 @@ func CreateDirectoryIfNotExists(dirPath string) error {
 
 func ParseArgsFromCLI() CLIArgs {
 	// Define flags
+	versionArg := flag.Bool("v", false, "Show version information")
 	printLanguagesArg := flag.Bool("print-languages", false, "Prints out the supported languages, file suffixes, and comment configurations. Does not run the tool.")
 	logLevelArg := flag.String("log-level", "INFO", "Log level - DEBUG, INFO, WARN, ERROR")
 	ignoreFilePathArg := flag.String("ignore-file-path", "", "Path to your ignore file. Defines directories and files to exclude when scanning. Please see the README.md for how to format your ignore configuration")
@@ -75,7 +81,7 @@ func ParseArgsFromCLI() CLIArgs {
 	htmlReportsDirectoryPathArg := flag.String("html", "", "Path to dump HTML reports into a specified directory, otherwise HTML reports are not generated. Note this directory must already exist.")
 	overrideLanguageConfigFilePathArg := flag.String("override-languages", "", "Path to languages configuration to override the default configuration.")
 
-	logger.Info("Parsing CLI arguments")
+	logger.Debug("Parsing CLI arguments")
 	// Parse flags
 	flag.Parse()
 	// Parse non-flag arguments
@@ -85,6 +91,11 @@ func ParseArgsFromCLI() CLIArgs {
 	if len(cliArgs) > 0 {
 		// Parse any remaining flags after the first non-flag argument
 		flag.CommandLine.Parse(cliArgs[1:])
+	}
+
+	if *versionArg {
+		fmt.Println("v" + VERSION)
+		os.Exit(0)
 	}
 
 	// Set log level immediately after parsing
