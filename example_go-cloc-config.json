@@ -1,0 +1,26 @@
+{
+  "_comment": "Copy this file to go-cloc-config.json in the directory you run go-cloc from. It is loaded automatically — no --config flag needed. CLI flags always override values here.",
+
+  "log-level": "INFO",
+
+  "github-org": "sonar-solutions",
+  "github-repos-file": "",
+  "github-repos": "",
+
+  "github-token": "",
+
+  "branch": "",
+
+  "clone-dir": "/tmp/go-cloc-scan",
+  "no-cleanup": false,
+  "skip-archived": true,
+  "skip-forks": false,
+  "concurrency": 8,
+
+  "csv": "./results.csv",
+  "html": "",
+  "summary": "./summary.txt",
+
+  "ignore-file-path": "",
+  "override-languages": ""
+}

@@ -1,0 +1,10 @@
+# go-cloc repo list  ─  one "owner/repo" per line
+# Lines starting with '#' and blank lines are ignored.
+# Use this file with:  go-cloc --github-repos-file example_github_repos.txt
+#
+# ── Example repos ──────────────────────────────────────────────────────────────
+sonar-solutions/go-cloc
+# add more repos below, e.g.:
+# myorg/backend-api
+# myorg/frontend-app
+# myorg/shared-library

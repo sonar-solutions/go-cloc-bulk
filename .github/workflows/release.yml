@@ -1,0 +1,46 @@
+name: Release Binaries
+
+# Publishes cross-platform binaries to GitHub Releases whenever a version tag
+# (e.g. v2.0.4) is pushed.  End users can then run install.sh to pull the
+# correct binary for their platform automatically.
+#
+# Usage:
+#   git tag v2.0.4
+#   git push origin v2.0.4
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write   # needed to create a GitHub Release and upload assets
+
+jobs:
+  build-and-release:
+    name: Build & publish release
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── 1. Checkout the tagged commit ────────────────────────────────────────
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ── 2. Install Go ─────────────────────────────────────────────────────────
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      # ── 3. Cross-compile all platforms using the existing build script ────────
+      - name: Build all platforms
+        run: |
+          chmod +x build.sh
+          ./build.sh
+
+      # ── 4. Create a GitHub Release and upload the zipped binaries ─────────────
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: builds/*.zip
+          generate_release_notes: true

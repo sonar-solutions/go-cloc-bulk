@@ -1,0 +1,118 @@
+name: Count Lines of Code
+
+# ── Overview ──────────────────────────────────────────────────────────────────
+# This workflow clones and scans GitHub repositories without any container
+# runtime (no Docker required).  It runs on a standard GitHub-hosted Ubuntu
+# runner and uses only:
+#   • Go toolchain (installed via actions/setup-go)
+#   • git  (pre-installed on all GitHub-hosted runners)
+#
+# For workstation use instead of CI, download the correct pre-built binary
+# from GitHub Releases using the bundled install.sh script:
+#
+#   curl -fsSL https://raw.githubusercontent.com/<org>/go-cloc/main/install.sh | bash
+#
+# Then run go-cloc directly:
+#
+#   go-cloc --github-org myorg --skip-archived --csv results.csv
+#   go-cloc --github-repos-file my-repos.txt --html ./html-reports
+#
+# ── Triggers ──────────────────────────────────────────────────────────────────
+on:
+  # Run on a schedule (every Monday at 08:00 UTC)
+  schedule:
+    - cron: "0 8 * * 1"
+
+  # Allow manual runs from the GitHub UI with configurable inputs
+  workflow_dispatch:
+    inputs:
+      github_org:
+        description: "GitHub org to scan (leave blank to use repos-file instead)"
+        required: false
+        default: ""
+      skip_forks:
+        description: "Skip forked repositories?"
+        required: false
+        default: "false"
+      concurrency:
+        description: "Parallel clone workers"
+        required: false
+        default: "8"
+
+# ── Permissions ───────────────────────────────────────────────────────────────
+permissions:
+  contents: read
+
+jobs:
+  cloc:
+    name: go-cloc scan
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── 1. Check out this repo (contains the repos file & ignore config) ────
+      - name: Checkout go-cloc config repo
+        uses: actions/checkout@v4
+
+      # ── 2. Set up Go ─────────────────────────────────────────────────────────
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      # ── 3. Build go-cloc ──────────────────────────────────────────────────────
+      - name: Build go-cloc
+        run: go build -o go-cloc .
+
+      # ── 4. Run the scan ───────────────────────────────────────────────────────
+      #
+      # Strategy A — scan a whole GitHub organisation:
+      #   Use ${{ inputs.github_org }} or hard-code your org name below.
+      #
+      # Strategy B — scan an explicit list:
+      #   Provide example_github_repos.txt (or your own file) via
+      #   --github-repos-file and leave --github-org blank.
+      #
+      # The GITHUB_TOKEN secret is automatically available in Actions and gives
+      # read access to all repos in the same organisation.  For cross-org scans
+      # create a PAT with `repo` scope and store it as a repository secret.
+      - name: Run go-cloc
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ORG="${{ inputs.github_org }}"
+          SKIP_FORKS="${{ inputs.skip_forks || 'false' }}"
+          CONCURRENCY="${{ inputs.concurrency || '8' }}"
+
+          ARGS=(
+            --concurrency "$CONCURRENCY"
+            --skip-archived
+            --csv results.csv
+            --html html-reports
+          )
+
+          if [ -n "$ORG" ]; then
+            ARGS+=(--github-org "$ORG")
+          else
+            ARGS+=(--github-repos-file example_github_repos.txt)
+          fi
+
+          if [ "$SKIP_FORKS" = "true" ]; then
+            ARGS+=(--skip-forks)
+          fi
+
+          ./go-cloc "${ARGS[@]}"
+
+      # ── 5. Upload results as workflow artifacts ────────────────────────────────
+      - name: Upload CSV results
+        uses: actions/upload-artifact@v4
+        with:
+          name: cloc-results-csv
+          path: results.csv
+          retention-days: 90
+
+      - name: Upload HTML reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: cloc-results-html
+          path: html-reports/
+          retention-days: 90

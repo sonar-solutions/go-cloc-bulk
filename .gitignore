@@ -6,3 +6,12 @@ main
 
 # build directory
 builds/
+# local dev binary
+go-cloc-dev
+
+# personal config file (may contain tokens — never commit this)
+go-cloc-config.json
+
+# scan output files
+summary.txt
+results.csv
