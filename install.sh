@@ -39,7 +39,7 @@ echo "Downloading ${ZIP_FILE} from ${DOWNLOAD_URL}…"
 curl -fsSL -L -o "$ZIP_FILE" "$DOWNLOAD_URL"
 
 echo "Unpacking ${ZIP_FILE}…"
-unzip -q "$ZIP_FILE"
+unzip -oq "$ZIP_FILE"
 
 # Determine binary name and verify
 if [[ "$PLATFORM" == "windows" ]]; then
