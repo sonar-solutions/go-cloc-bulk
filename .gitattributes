@@ -1,0 +1,2 @@
+# Tell GitHub Linguist to exclude test fixture files from language statistics
+scanner/test-files/** linguist-vendored
