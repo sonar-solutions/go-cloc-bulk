@@ -128,8 +128,8 @@ func runGithubMode(args utilities.CLIArgs) {
 		}
 		repo, err := github.GetRepo(fullName, args.GithubToken)
 		if err != nil {
-			logger.Error("Failed to fetch repo metadata for ", fullName, ": ", err)
-			os.Exit(1)
+			logger.Warn("Skipping ", fullName, " — could not fetch repo metadata (deleted or inaccessible?): ", err)
+			continue
 		}
 		repos = append(repos, repo)
 		seen[fullName] = true
