@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	VERSION string = "2.0.3" // Update this version when making releases)
+	VERSION string = "2.1.0" // Update this version when making releases)
 )
 
 // Modes
